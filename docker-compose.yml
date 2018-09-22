@@ -2,6 +2,13 @@ version: '2.1'
 
 services:
 
+  api:
+    build:
+      context: api
+      dockerfile: Dockerfile
+    ports:
+    - 8081:8080
+
   postgres:
     build:
       context: .
@@ -34,20 +41,20 @@ services:
     image: adminer
     restart: always
     ports:
-    - 8080:8080
+    - 8082:8080
 
   app:
     build: app
     ports:
       - '8080:5000'
 
-  caddy:
-    image: abiosoft/caddy:0.11.0
-    depends_on:
-      app:
-        condition: service_started
-    volumes:
-      - './Caddyfile:/etc/Caddyfile'
-    ports:
-      - '80:80'
-      - '443:443'
+#  caddy:
+#    image: abiosoft/caddy:0.11.0
+#    depends_on:
+#      app:
+#        condition: service_started
+#    volumes:
+#      - './Caddyfile:/etc/Caddyfile'
+#    ports:
+#      - '80:80'
+#      - '443:443'
