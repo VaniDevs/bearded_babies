@@ -1,0 +1,37 @@
+version: '2.1'
+
+services:
+
+  postgres:
+    build:
+      context: .
+      dockerfile: postgres/Dockerfile
+    restart: always
+    env_file: .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+    - ../bb-data:/var/lib/postgresql/data
+    healthcheck:
+      test: psql -U postgres -l
+      interval: 10s
+      retries: 5
+    ports:
+    - 5432:5432
+
+  pgAdmin:
+    image: dpage/pgadmin4
+    restart: always
+    environment:
+      PGADMIN_DEFAULT_EMAIL: user@domain.com
+      PGADMIN_DEFAULT_PASSWORD: SuperSecret
+    ports:
+    - 5050:80
+
+  adminer:
+    image: adminer
+    restart: always
+    ports:
+    - 8080:8080
