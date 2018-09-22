@@ -1,5 +1,6 @@
-import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK } from 'react-admin';
+import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS } from 'react-admin';
 import { apiMethod } from './api'
+import decodeJwt from 'jwt-decode';
 
 export default (type, params) => {
     if (type === AUTH_LOGIN) {
@@ -17,12 +18,15 @@ export default (type, params) => {
                 return response.json();
             })
             .then(({ token }) => {
+                const decodedToken = decodeJwt(token);
                 localStorage.setItem('token', token);
+                localStorage.setItem('role', decodedToken.role);
             });
     }
 
     if (type === AUTH_LOGOUT) {
         localStorage.removeItem('token');
+        localStorage.removeItem('role');
         return Promise.resolve();
     }
 
@@ -30,6 +34,7 @@ export default (type, params) => {
         const status  = params.status;
         if (status === 401 || status === 403) {
             localStorage.removeItem('token');
+            localStorage.removeItem('role');
             return Promise.reject();
         }
         return Promise.resolve();
@@ -55,6 +60,11 @@ export default (type, params) => {
         } else {
             return Promise.reject();
         }
+    }
+
+    if (type === AUTH_GET_PERMISSIONS) {
+        const role = localStorage.getItem('role');
+        return role ? Promise.resolve(role) : Promise.reject();
     }
 
     return Promise.reject('Unknown method');
