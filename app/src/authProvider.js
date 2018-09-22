@@ -1,10 +1,10 @@
 import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK } from 'react-admin';
-import { api_method } from './api'
+import { apiMethod } from './api'
 
 export default (type, params) => {
     if (type === AUTH_LOGIN) {
         const { username, password } = params;
-        const request = new Request(api_method("authenticate"), {
+        const request = new Request(apiMethod("authenticate"), {
             method: 'POST',
             body: JSON.stringify({ username, password }),
             headers: new Headers({ 'Content-Type': 'application/json' }),
@@ -38,7 +38,7 @@ export default (type, params) => {
     if (type === AUTH_CHECK) {
         const token = localStorage.getItem('token');
         if (token) {
-            const request = new Request(api_method("validate"), {
+            const request = new Request(apiMethod("validate"), {
                 method: 'GET',
                 headers: new Headers({'Authorization': `Bearer ${token}`})
             });
