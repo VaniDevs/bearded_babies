@@ -11,7 +11,6 @@ import { AgenciesList, AgenciesEdit, AgenciesCreate, AgenciesIcon } from './agen
 import {ClientsList, ClientsEdit, ClientsCreate, ClientsIcon} from './clients';
 import {GearList, GearEdit, GearCreate, GearIcon} from './gear';
 import {ReferralsList, ReferralsEdit, ReferralsCreate, ReferralsIcon} from './referrals';
-import {AppointmentCreate, AppointmentList, AppointmentIcon} from './appointments';
 
 const history = createHistory();
 
