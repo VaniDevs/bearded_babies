@@ -27,7 +27,6 @@ const httpClient = (url, options = {}) => {
 const dataProvider = simpleRestProvider(apiMethod(), httpClient);
 
 render(
-<<<<<<< HEAD
     <Admin customRoutes={customRoutes} dataProvider={dataProvider} history={history}>
         {permissions => [
         permissions === 'admin' ? <Resource name="agencies" list={AgenciesList} edit={AgenciesEdit} create={AgenciesCreate} icon={AgenciesIcon} /> : null,
@@ -37,14 +36,6 @@ render(
         permissions === 'admin' ? <Resource name="gear_statuses"/> : null,
         <Resource name="referrals" list={ReferralsList} edit={ReferralsEdit} create={permissions === 'agent' ? ReferralsCreate : null} icon={ReferralsIcon} />
         ]}
-=======
-    <Admin customRoutes={customRoutes} dataProvider={dataProvider}>
-        <Resource name="agencies" list={AgenciesList} edit={AgenciesEdit} create={AgenciesCreate} icon={AgenciesIcon} />
-        <Resource name="clients" list={ClientsList} edit={ClientsEdit} create={ClientsCreate} icon={ClientsIcon} />
-        <Resource name="gear" list={GearList} edit={GearEdit} create={GearCreate} icon={GearIcon} />
-        <Resource name="referrals" list={ReferralsList} edit={ReferralsEdit} create={ReferralsCreate} icon={ReferralsIcon} />
-        <Resource name="appointments" list={AppointmentList} create={AppointmentCreate} icon={AppointmentIcon} />
->>>>>>> 2ff3c4d2da3ce5c783a460124ea9047f486c5c3d
     </Admin>,
     document.getElementById('root')
 );
