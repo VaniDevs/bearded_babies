@@ -2,11 +2,11 @@ package main
 
 import (
 	"./service"
-	"github.com/gin-contrib/cors"
-	"github.com/gin-gonic/gin"
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/gin-contrib/cors"
+	"github.com/gin-gonic/gin"
 	"github.com/sendgrid/sendgrid-go"
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 	"log"
