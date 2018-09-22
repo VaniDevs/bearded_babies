@@ -1,0 +1,10 @@
+babygoround.ca {
+    tls babygoround@gmail.com
+    gzip
+
+    proxy / app:8080
+}
+
+www.babygoround.ca {
+    redir https://babygoround.ca{uri}
+}
