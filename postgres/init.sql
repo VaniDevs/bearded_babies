@@ -1,26 +1,14 @@
 -- Adminer 4.6.2 PostgreSQL dump
 
-DROP TABLE IF EXISTS "user";
-DROP SEQUENCE IF EXISTS user_id_seq;
-CREATE SEQUENCE user_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+DROP TABLE IF EXISTS "agency";
+DROP SEQUENCE IF EXISTS agency_id_seq;
+CREATE SEQUENCE agency_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
 
-
-CREATE TABLE "public"."user" (
-    "id" integer DEFAULT nextval('user_id_seq') NOT NULL,
+CREATE TABLE "public"."agency" (
+    "id" integer DEFAULT nextval('agency_id_seq') NOT NULL,
     "login" character varying NOT NULL,
     "password" character varying NOT NULL,
     "role" integer NOT NULL,
-    CONSTRAINT "user_id" PRIMARY KEY ("id")
-) WITH (oids = false);
-
-
-INSERT INTO "user" ("id", "login", "password", "role") VALUES
-(1,	'admin',	'21232f297a57a5a743894a0e4a801fc3',	1);
-
-
-DROP TABLE IF EXISTS "agency";
-CREATE TABLE "public"."agency" (
-    "id" integer NOT NULL,
     "status" integer NOT NULL,
     "name" character varying NOT NULL,
     "phone" character varying NOT NULL,
@@ -29,14 +17,18 @@ CREATE TABLE "public"."agency" (
     "address1" character varying NOT NULL,
     "address2" character varying NOT NULL,
     "contact" character varying NOT NULL,
-    CONSTRAINT "agency_id" PRIMARY KEY ("id"),
-    CONSTRAINT "agency_id_fkey" FOREIGN KEY (id) REFERENCES "user"(id) ON UPDATE SET NULL ON DELETE SET NULL NOT DEFERRABLE
+    CONSTRAINT "agency_id" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
+INSERT INTO "agency" ("id", "login", "password", "role", "status", "name", "phone", "email", "city", "address1", "address2", "contact") VALUES
+(1,	'admin',	'21232f297a57a5a743894a0e4a801fc3',	1,	1,	'',	'',	'',	'',	'',	'',	'');
 
 DROP TABLE IF EXISTS "client";
+DROP SEQUENCE IF EXISTS client_id_seq;
+CREATE SEQUENCE client_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+
 CREATE TABLE "public"."client" (
-    "id" integer NOT NULL,
+    "id" integer DEFAULT nextval('client_id_seq') NOT NULL,
     "status" integer NOT NULL,
     "name" character varying NOT NULL,
     "DOB" date NOT NULL,
@@ -53,8 +45,7 @@ CREATE TABLE "public"."client" (
     "homeless" smallint DEFAULT '0' NOT NULL,
     "special_needs" smallint DEFAULT '0' NOT NULL,
     CONSTRAINT "client_id" PRIMARY KEY ("id"),
-    CONSTRAINT "client_agency_id_fkey" FOREIGN KEY (agency_id) REFERENCES agency(id) ON UPDATE SET NULL ON DELETE SET NULL NOT DEFERRABLE,
-    CONSTRAINT "client_id_fkey" FOREIGN KEY (id) REFERENCES "user"(id) ON UPDATE SET NULL ON DELETE SET NULL NOT DEFERRABLE
+    CONSTRAINT "client_agency_id_fkey" FOREIGN KEY (agency_id) REFERENCES agency(id) ON UPDATE SET NULL ON DELETE SET NULL NOT DEFERRABLE
 ) WITH (oids = false);
 
 
@@ -93,4 +84,4 @@ CREATE TABLE "public"."referral_gear" (
 ) WITH (oids = false);
 
 
--- 2018-09-22 19:48:01.263279+00
+-- 2018-09-22 20:36:44.110215+00
