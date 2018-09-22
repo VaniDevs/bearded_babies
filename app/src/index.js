@@ -7,7 +7,6 @@ import { apiMethod } from './api';
 import customRoutes from './customRoutes';
 
 import { AgenciesList, AgenciesEdit, AgenciesCreate, AgenciesIcon } from './agencies';
-import { UsersList, UsersEdit, UsersCreate, UsersIcon } from './users';
 import {ClientsList, ClientsEdit, ClientsCreate, ClientsIcon} from './clients';
 import {GearList, GearEdit, GearCreate, GearIcon} from './gear';
 import {ReferralsList, ReferralsEdit, ReferralsCreate, ReferralsIcon} from './referrals';
@@ -27,7 +26,6 @@ render(
     <Admin customRoutes={customRoutes} dataProvider={dataProvider} authProvider={authProvider}>
         <Resource name="agencies" list={AgenciesList} edit={AgenciesEdit} create={AgenciesCreate} icon={AgenciesIcon} />
         <Resource name="clients" list={ClientsList} edit={ClientsEdit} create={ClientsCreate} icon={ClientsIcon} />
-        <Resource name="users" list={UsersList} edit={UsersEdit} create={UsersCreate} icon={UsersIcon} />
         <Resource name="gear" list={GearList} edit={GearEdit} create={GearCreate} icon={GearIcon} />
         <Resource name="referrals" list={ReferralsList} edit={ReferralsEdit} create={ReferralsCreate} icon={ReferralsIcon} />
     </Admin>,
