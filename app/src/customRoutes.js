@@ -1,7 +1,7 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import ResetPassword from './ResetPassword';
+import ScheduleAppointment from './ScheduleAppointment';
 
 export default [
-    <Route exact path="/reset-password" component={ResetPassword} />,
+    <Route exact path="/schedule-appointment" component={ScheduleAppointment} noLayout />,
 ];

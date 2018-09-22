@@ -9,7 +9,7 @@ export const ReferralsList = (props) => (
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />
-            <EditButton basePath="/Referrals" />
+            <EditButton basePath="/referrals" />
         </Datagrid>
     </List>
 );

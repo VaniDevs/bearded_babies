@@ -5,7 +5,7 @@ import { Title } from 'react-admin';
 
 const Foo = () => (
     <Card>
-        <Title title="Reset password" />
+        <Title title="Schedule appointment" />
         <CardContent>
 
         </CardContent>
