@@ -6,6 +6,8 @@ ADD . /app
 RUN apk update && apk upgrade && \
     apk add --no-cache bash git openssh
 
+RUN go get github.com/sendgrid/sendgrid-go
+
 RUN go build ./main.go
 
 EXPOSE 8080
