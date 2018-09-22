@@ -46,7 +46,7 @@ services:
   app:
     build: app
     ports:
-      - '8081:5000'
+    - 8083:5000
 
 #  caddy:
 #    image: abiosoft/caddy:0.11.0
