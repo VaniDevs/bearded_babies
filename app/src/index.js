@@ -29,7 +29,7 @@ render(
         <Resource name="clients" list={ClientsList} edit={ClientsEdit} create={ClientsCreate} icon={ClientsIcon} />
         <Resource name="users" list={UsersList} edit={UsersEdit} create={UsersCreate} icon={UsersIcon} />
         <Resource name="gear" list={GearList} edit={GearEdit} create={GearCreate} icon={GearIcon} />
-        <Resource name="Referrals" list={ReferralsList} edit={ReferralsEdit} create={ReferralsCreate} icon={ReferralsIcon} />
+        <Resource name="referrals" list={ReferralsList} edit={ReferralsEdit} create={ReferralsCreate} icon={ReferralsIcon} />
     </Admin>,
     document.getElementById('root')
 );
