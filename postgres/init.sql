@@ -57,4 +57,40 @@ CREATE TABLE "public"."client" (
     CONSTRAINT "client_id_fkey" FOREIGN KEY (id) REFERENCES "user"(id) ON UPDATE SET NULL ON DELETE SET NULL NOT DEFERRABLE
 ) WITH (oids = false);
 
+
+DROP TABLE IF EXISTS "gear";
+DROP SEQUENCE IF EXISTS gear_id_seq;
+CREATE SEQUENCE gear_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+
+CREATE TABLE "public"."gear" (
+    "id" integer DEFAULT nextval('gear_id_seq') NOT NULL,
+    "name" character varying NOT NULL,
+    CONSTRAINT "gear_id" PRIMARY KEY ("id")
+) WITH (oids = false);
+
+
+DROP TABLE IF EXISTS "referral";
+DROP SEQUENCE IF EXISTS referral_id_seq;
+CREATE SEQUENCE referral_id_seq INCREMENT 1 MINVALUE 1 MAXVALUE 2147483647 START 1 CACHE 1;
+
+CREATE TABLE "public"."referral" (
+    "id" integer DEFAULT nextval('referral_id_seq') NOT NULL,
+    "client_id" integer NOT NULL,
+    "appointment1" timestamp NOT NULL,
+    "appointment2" timestamp NOT NULL,
+    CONSTRAINT "referral_id" PRIMARY KEY ("id"),
+    CONSTRAINT "referral_client_id_fkey" FOREIGN KEY (client_id) REFERENCES client(id) ON UPDATE SET NULL ON DELETE SET NULL NOT DEFERRABLE
+) WITH (oids = false);
+
+
+DROP TABLE IF EXISTS "referral_gear";
+CREATE TABLE "public"."referral_gear" (
+    "referral_id" integer NOT NULL,
+    "gear_id" integer NOT NULL,
+    "status" integer NOT NULL,
+    CONSTRAINT "referral_gear_gear_id_fkey" FOREIGN KEY (gear_id) REFERENCES gear(id) ON UPDATE SET NULL ON DELETE SET NULL NOT DEFERRABLE,
+    CONSTRAINT "referral_gear_referral_id_fkey" FOREIGN KEY (referral_id) REFERENCES referral(id) ON UPDATE SET NULL ON DELETE SET NULL NOT DEFERRABLE
+) WITH (oids = false);
+
+
 -- 2018-09-22 19:48:01.263279+00
