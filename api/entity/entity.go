@@ -53,3 +53,8 @@ type ReferralGear struct {
 	GearID     int `json:"rearId"`
 	Status     int `json:"status"`
 }
+
+type TimeInterval struct {
+	Time     time.Time `json:"time"`
+	Interval int       `json:"interval"`
+}

@@ -17,9 +17,9 @@ func InitReferrals(router *gin.Engine) {
 
 func Referrals(c *gin.Context) {
 	_, _range, _sort := GetListParams(c)
-	gears := database.Gears(_range, _sort)
-	SetContentRange(c, "referrals", 0, len(gears), len(gears))
-	c.JSON(http.StatusOK, gears)
+	referrals := database.Referrals(_range, _sort)
+	SetContentRange(c, "referrals", 0, len(referrals), len(referrals))
+	c.JSON(http.StatusOK, referrals)
 }
 
 func Referral(c *gin.Context) {
