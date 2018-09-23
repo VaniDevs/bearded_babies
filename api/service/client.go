@@ -3,18 +3,11 @@ package service
 import (
 	"../database"
 	"../entity"
+	"fmt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
-	"fmt"
 )
-
-func InitClients(router *gin.Engine) {
-	router.GET("/clients", Clients)
-	router.POST("/clients", AddClient)
-	router.GET("/clients/:id", Clients)
-	router.PUT("/clients/:id", PutClient)
-}
 
 func Clients(c *gin.Context) {
 	_, _range, _sort := GetListParams(c)
