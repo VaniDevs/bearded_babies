@@ -8,18 +8,20 @@ import (
 	"time"
 )
 
-func Clients(_range []int, _sort []string, userId int, role int) []*entity.Client {
+func Clients(_range []int, _sort []string, _filter string, userId int, role int) []*entity.Client {
 	db := getDatabase()
 	defer db.Close()
 
 	if role == 1 {
 		query := "SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, agency_id, " +
 			"unemployed, newcomer, homeless, special_needs FROM client"
-		if len(_sort) >= 2 {
-			query = fmt.Sprintf("SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, "+
-				"agency_id, unemployed, newcomer, homeless, special_needs FROM client ORDER BY %s %s",
-				_sort[0], _sort[1])
-		}
+
+		if len(_filter) > 0 {
+            query += fmt.Sprintf(" WHERE %s ", _filter)
+        }
+        if len(_sort) >= 2 {
+            query += fmt.Sprintf(" ORDER BY %s %s ", _sort[0], _sort[1])
+        }
 
 		rows, err := db.Query(query)
 		checkErr(err)

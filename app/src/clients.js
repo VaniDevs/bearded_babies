@@ -17,7 +17,8 @@ import {
     ReferenceInput,
     BooleanInput,
     FormDataConsumer,
-    required
+    required,
+    Filter
 } from 'react-admin';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
@@ -29,8 +30,14 @@ const clientStatus = [
 
 export const ClientsIcon = AccountCircle;
 
+const ClientsFilter = (props) => (
+    <Filter {...props}>
+        <SelectInput label="Status" optionText="name" source="status" choices={clientStatus}/>
+    </Filter>
+);
+
 export const ClientsList = ({ permissions, ...props }) => (
-    <List {...props}>
+    <List {...props} filters={permissions === 'admin' ? <ClientsFilter/> : null}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />

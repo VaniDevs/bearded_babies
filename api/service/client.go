@@ -14,8 +14,8 @@ func Clients(c *gin.Context) {
 	claims := jwt.ExtractClaims(c)
 	id := int(claims["id"].(float64))
 	role := int(claims["role"].(float64))
-	_, _range, _sort := GetListParams(c)
-	clients := database.Clients(_range, _sort, id, role)
+	_filter, _range, _sort := GetListParams(c)
+	clients := database.Clients(_range, _sort, _filter, id, role)
 	SetContentRange(c, "clients", 0, len(clients), len(clients))
 	c.JSON(http.StatusOK, clients)
 }
