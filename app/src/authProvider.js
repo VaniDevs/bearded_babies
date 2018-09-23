@@ -8,9 +8,6 @@ const roles = {
 };
 
 export default (type, params) => {
-    console.log(type);
-    console.log(params);
-    console.log(window.location.pathname);
 
     if (type === AUTH_LOGIN) {
         const { username, password } = params;

@@ -125,7 +125,7 @@ func main() {
 
 		admin.GET("/clients", service.Clients)
 		admin.POST("/clients", service.AddClient)
-		admin.GET("/clients/:id", service.Clients)
+		admin.GET("/clients/:id", service.Client)
 		admin.PUT("/clients/:id", service.PutClient)
 
 		admin.GET("/gears", service.Gears)
