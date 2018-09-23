@@ -30,9 +30,7 @@ render(
         {permissions => [
         permissions === 'admin' ? <Resource name="agencies" list={AgenciesList} edit={AgenciesEdit} create={AgenciesCreate} icon={AgenciesIcon} /> : null,
         <Resource name="clients" list={ClientsList} edit={ClientsEdit} create={ClientsCreate} icon={ClientsIcon} />,
-        <Resource name="client_statuses"/>,
         permissions === 'admin' ? <Resource name="gears" list={GearList} edit={GearEdit} create={GearCreate} icon={GearIcon} /> : null,
-        permissions === 'admin' ? <Resource name="gear_statuses"/> : null,
         <Resource name="referrals" list={ReferralsList} edit={ReferralsEdit} create={permissions === 'agent' ? ReferralsCreate : null} icon={ReferralsIcon} />
         ]}
     </Admin>,

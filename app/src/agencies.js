@@ -6,7 +6,7 @@ import NoteIcon from '@material-ui/icons/Note';
 export const AgenciesIcon = NoteIcon;
 
 export const AgenciesList = (props) => (
-    <List {...props}>
+    <List {...props} filter={{role: 2}}>
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />
@@ -25,9 +25,9 @@ export const AgenciesEdit = (props) => (
     <Edit title={<AgenciesTitle />} {...props}>
         <SimpleForm>
             <DisabledInput source="id" />
+            <DisabledInput source="role" />
             <TextInput source="name" fullWidth validate={required()} />
             <TextInput source="login" fullWidth validate={required()} />
-            <TextInput source="password" fullWidth validate={required()} />
             <TextInput source="address1" fullWidth validate={required()}/>
             <TextInput source="address2" fullWidth />
             <TextInput source="city" fullWidth validate={required()}/>
@@ -41,6 +41,7 @@ export const AgenciesEdit = (props) => (
 export const AgenciesCreate = (props) => (
     <Create title="Create an agency" {...props}>
         <SimpleForm>
+            <DisabledInput source="role" defaultValue={2} />
             <TextInput source="name" fullWidth validate={required()}/>
             <TextInput source="login" fullWidth validate={required()} />
             <TextInput source="password" fullWidth validate={required()} />

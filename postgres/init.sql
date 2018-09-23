@@ -37,7 +37,6 @@ CREATE TABLE "public"."client" (
     "city" character varying NOT NULL,
     "address1" character varying NOT NULL,
     "address2" character varying NOT NULL,
-    "notification" integer NOT NULL,
     "agency_id" integer NOT NULL,
     "unemployed" smallint DEFAULT '0' NOT NULL,
     "newcomer" smallint DEFAULT '0' NOT NULL,
