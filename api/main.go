@@ -13,8 +13,8 @@ import (
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 	"log"
 	"net/http"
-	"time"
 	"os"
+	"time"
 )
 
 var identityKey = "id"

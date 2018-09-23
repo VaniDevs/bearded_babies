@@ -44,6 +44,8 @@ type Referral struct {
 	ClientID     int      `json:"clientId"`
 	Appointment1 NullTime `json:"appointment1"`
 	Appointment2 NullTime `json:"appointment2"`
+	Requested    []int    `json:"requested"`
+	Unavailable  []int    `json:"unavailable"`
 }
 
 type ReferralGear struct {
