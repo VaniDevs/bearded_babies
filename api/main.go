@@ -42,7 +42,6 @@ func original(origin string) bool {
 }
 
 func SendSms(text string, phoneNumber string) {
-	// TOOD: remove keys
 	values := map[string]string{
 		"api_key":    os.Getenv("NOTIFICATION_API_KEY"),
 		"api_secret": os.Getenv("NOTIFICATION_API_SECRET"),
