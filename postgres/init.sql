@@ -118,11 +118,17 @@ INSERT INTO "agency" ("login", "password", "role", "name", "phone", "email", "ci
 ('agency2', '21232f297a57a5a743894a0e4a801fc3',	2,	'Awesome Agency 2',	'5551234567',	'agency2@gmail.com',	'Vancouver',	'321 Main st.',	'',	'Agent 2');
 
 INSERT INTO "client" (status, name, dob, childdob, phone, email, city, address1, address2, agency_id, unemployed, newcomer, homeless, special_needs) VALUES
-(0, 'William',	'1990-01-01', '2017-01-01',	'17783785025',	'john@gmail.com',	'Richmond',	'123 No.3 Rd.',	'',	2, 1, 1, 0, 0);
+(0, 'William',	'1990-01-01', '2017-01-01',	'17783785025',	'john@gmail.com',	'Richmond',	'123 No.3 Rd.',	'',	2, 1, 1, 0, 0),
+(1, 'Roy',	'1990-01-01', '2017-01-01',	'17783785025',	'roy@gmail.com',	'Richmond',	'123 No.3 Rd.',	'',	3, 1, 1, 0, 0);
+
+
 
 INSERT INTO "referral" ("client_id", "appointment1", "appointment2") VALUES
-(1, '0001-01-01T00:00:00',	'0001-01-01T00:00:00');
+(1, '0001-01-01T00:00:00',	'0001-01-01T00:00:00'),
+(2, '0001-01-01T00:00:00',	'0001-01-01T00:00:00');
 
 INSERT INTO "referral_gear" ("referral_id", "gear_id", "status") VALUES
-(1, 4, 1);
+(1, 4, 1),
+(1, 5, 1),
+(1, 6, 2);
 --
