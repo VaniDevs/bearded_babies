@@ -18,20 +18,20 @@ type Agency struct {
 
 type Client struct {
 	ID           int       `json:"id"`
-	Status       int       `json:"status_id"`
+	Status       int       `json:"status"`
 	Name         string    `json:"name"`
 	DOB          time.Time `json:"dob"`
-	ChildDOB     time.Time `json:"child_dob"`
+	ChildDOB     time.Time `json:"childDob"`
 	Phone        string    `json:"phone"`
 	Email        string    `json:"email"`
 	City         string    `json:"city"`
 	Address1     string    `json:"address1"`
 	Address2     string    `json:"address2"`
-	AgencyId     int       `json:"agency_id"`
+	AgencyId     int       `json:"agencyId"`
 	Unemployed   int       `json:"unemployed"`
 	Newcomer     int       `json:"newcomer"`
 	Homeless     int       `json:"homeless"`
-	SpecialNeeds int       `json:"special_needs"`
+	SpecialNeeds int       `json:"specialNeeds"`
 }
 
 type Gear struct {
@@ -48,6 +48,6 @@ type Referral struct {
 
 type ReferralGear struct {
 	ReferralID int `json:"referralId"`
-	GearID     int `json:"rearId"`
+	GearID     int `json:"gearId"`
 	Status     int `json:"status"`
 }

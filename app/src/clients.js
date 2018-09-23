@@ -57,25 +57,25 @@ export const ClientsEdit = ({ permissions, ...props }) => (
             <DisabledInput source="id" />
             <TextInput source="name" fullWidth validate={required()}/>
             <DateInput label="DOB" source="dob" validate={required()}/>
-            <DateInput label="Child DOB" source="childdob" validate={required()}/>
+            <DateInput label="Child DOB" source="childDob" validate={required()}/>
             <TextInput source="address1" fullWidth validate={required()}/>
             <TextInput source="address2" fullWidth />
             <TextInput source="city" fullWidth validate={required()}/>
             <TextInput source="phone" fullWidth/>
             <TextInput source="email" fullWidth/>
             {permissions === 'admin' ?
-                <ReferenceInput label="Agency" source="agency_id" reference="agencies" filter={{role: 2}} validate={required()}>
+                <ReferenceInput label="Agency" source="agencyId" reference="agencies" filter={{role: 2}} validate={required()}>
                     <SelectInput optionText="name" />
                 </ReferenceInput>
                 : null}
             {permissions === 'admin' ?
-                <SelectInput label="Status" optionText="name" choices={clientStatus} validate={required()}/>
+                <SelectInput label="Status" optionText="name" source="status" choices={clientStatus} validate={required()}/>
                 : null
             }
             <BooleanInput source="unemployed" format={v => !!v} parse={v => +v}/>
             <BooleanInput source="newcomer" format={v => !!v} parse={v => +v}/>
             <BooleanInput source="homeless" format={v => !!v} parse={v => +v}/>
-            <BooleanInput label="Special needs" source="special_needs" format={v => !!v} parse={v => +v}/>
+            <BooleanInput label="Special needs" source="specialNeeds" format={v => !!v} parse={v => +v}/>
         </SimpleForm>
     </Edit>
 );
@@ -84,26 +84,26 @@ export const ClientsCreate = ({ permissions, ...props }) => (
     <Create title="Create a client" {...props}>
         <SimpleForm>
             <TextInput source="name" fullWidth validate={required()}/>
-            <DateInput label="DOB" source="dob" validate={required()}/>
-            <DateInput label="Child DOB" source="childdob" validate={required()}/>
+            <DateInput label="DOB" source="dob" parse={v => v.toString() + " 00:00:00"} validate={required()}/>
+            <DateInput label="Child DOB" source="childDob" parse={v => v.toString() + " 00:00:00"} validate={required()}/>
             <TextInput source="address1" fullWidth validate={required()}/>
             <TextInput source="address2" fullWidth />
             <TextInput source="city" fullWidth validate={required()}/>
             <TextInput source="phone" fullWidth/>
             <TextInput source="email" fullWidth/>
             {permissions === 'admin' ?
-                <ReferenceInput label="Agency" source="agency_id" reference="agencies" filter={{role: 2}} validate={required()}>
+                <ReferenceInput label="Agency" source="agencyId" reference="agencies" filter={{role: 2}} validate={required()}>
                     <SelectInput optionText="name" />
                 </ReferenceInput>
                 : null}
             {permissions === 'admin' ?
-                <SelectInput label="Status" optionText="name" choices={clientStatus} validate={required()}/>
+                <SelectInput label="Status" optionText="name" source="status" choices={clientStatus} validate={required()}/>
                 : null
             }
             <BooleanInput source="unemployed" format={v => !!v} parse={v => +v}/>
             <BooleanInput source="newcomer" format={v => !!v} parse={v => +v}/>
             <BooleanInput source="homeless" format={v => !!v} parse={v => +v}/>
-            <BooleanInput label="Special needs" source="special_needs" format={v => !!v} parse={v => +v}/>
+            <BooleanInput label="Special needs" source="specialNeeds" format={v => !!v} parse={v => +v}/>
         </SimpleForm>
     </Create>
 );

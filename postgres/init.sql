@@ -19,8 +19,8 @@ CREATE TABLE "public"."agency" (
     CONSTRAINT "agency_id" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
-INSERT INTO "agency" ("id", "login", "password", "role", "name", "phone", "email", "city", "address1", "address2", "contact") VALUES
-(1,	'admin', '21232f297a57a5a743894a0e4a801fc3',	1,	'BabyGoRound',	'',	'',	'',	'',	'',	'');
+INSERT INTO "agency" ("login", "password", "role", "name", "phone", "email", "city", "address1", "address2", "contact") VALUES
+('admin', '21232f297a57a5a743894a0e4a801fc3',	1,	'BabyGoRound',	'',	'',	'',	'',	'',	'');
 
 DROP TABLE IF EXISTS "client";
 DROP SEQUENCE IF EXISTS client_id_seq;

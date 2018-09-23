@@ -11,11 +11,11 @@ func Clients(_range []int, _sort []string) []*entity.Client {
 	db := getDatabase()
 	defer db.Close()
 
-	query := "SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, notification, agency_id, " +
+	query := "SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, agency_id, " +
 		"unemployed, newcomer, homeless, special_needs FROM client"
 	if len(_sort) >= 2 {
 		query = fmt.Sprintf("SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, "+
-			"notification, agency_id, unemployed, newcomer, homeless, special_needs FROM client ORDER BY %s %s",
+			"agency_id, unemployed, newcomer, homeless, special_needs FROM client ORDER BY %s %s",
 			_sort[0], _sort[1])
 	}
 	rows, err := db.Query(query)
@@ -35,9 +35,9 @@ func AddClient(client *entity.Client) *entity.Client {
 
 	var insertId int
 	err := db.QueryRow("INSERT INTO client(status, name, dob, childdob, phone, email, city, address1, address2, "+
-		"notification, agency_id, unemployed, newcomer, homeless, special_needs) VALUES "+
-		"($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) returning id;", client.Status, client.Name, client.DOB,
-		client.ChildDOB, client.Phone, client.Email, client.City, client.Address1, client.Address2, client.Notification,
+		"agency_id, unemployed, newcomer, homeless, special_needs) VALUES "+
+		"($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14) returning id;", client.Status, client.Name, client.DOB,
+		client.ChildDOB, client.Phone, client.Email, client.City, client.Address1, client.Address2,
 		client.AgencyId, client.Unemployed, client.Newcomer, client.Homeless, client.SpecialNeeds).Scan(&insertId)
 	checkErr(err)
 	client.ID = insertId
@@ -47,7 +47,7 @@ func AddClient(client *entity.Client) *entity.Client {
 func GetClient(id int) *entity.Client {
 	db := getDatabase()
 	defer db.Close()
-	rows, err := db.Query("SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, notification, "+
+	rows, err := db.Query("SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, "+
 		"agency_id, unemployed, newcomer, homeless, special_needs FROM client WHERE id = $1", id)
 	checkErr(err)
 	var client *entity.Client
@@ -62,24 +62,24 @@ func UpdateClient(client *entity.Client) {
 	defer db.Close()
 
 	_, err := db.Query("UPDATE client SET status = $2, name = $3, dob = $4, childdob = $5, phone = $6, email = $7, "+
-		"city = $8, address1 = $9, address2 = $10, notification = $11, agency_id = $12, unemployed = $13, newcomer = $14, "+
-		"homeless = $15, special_needs = $16 WHERE id = $1", client.ID, client.Status, client.Name, client.DOB,
-		client.ChildDOB, client.Phone, client.Email, client.City, client.Address1, client.Address2, client.Notification,
+		"city = $8, address1 = $9, address2 = $10, agency_id = $11, unemployed = $12, newcomer = $13, "+
+		"homeless = $14, special_needs = $15 WHERE id = $1", client.ID, client.Status, client.Name, client.DOB,
+		client.ChildDOB, client.Phone, client.Email, client.City, client.Address1, client.Address2,
 		client.AgencyId, client.Unemployed, client.Newcomer, client.Homeless, client.SpecialNeeds)
 	checkErr(err)
 
 }
 
 func readClient(rows *sql.Rows) *entity.Client {
-	var id, status, notification, agencyId, unemployed, newcomer, homeless, specialNeeds int
+	var id, status, agencyId, unemployed, newcomer, homeless, specialNeeds int
 	var DOB, ChildDOB time.Time
 	var name, phone, email, city, address1, address2 string
 
-	err := rows.Scan(&id, &status, &name, &DOB, &ChildDOB, &phone, &email, &city, &address1, &address2, &notification,
+	err := rows.Scan(&id, &status, &name, &DOB, &ChildDOB, &phone, &email, &city, &address1, &address2,
 		&agencyId, &unemployed, &newcomer, &homeless, &specialNeeds)
 	checkErr(err)
 	client := &entity.Client{ID: id, Status: status, Name: name, DOB: DOB, ChildDOB: ChildDOB, Phone: phone, Email: email,
-		City: city, Address1: address1, Address2: address2, Notification: notification, AgencyId: agencyId,
+		City: city, Address1: address1, Address2: address2, AgencyId: agencyId,
 		Unemployed: unemployed, Newcomer: newcomer, Homeless: homeless, SpecialNeeds: specialNeeds}
 	return client
 }

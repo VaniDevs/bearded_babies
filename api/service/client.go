@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
+	"fmt"
 )
 
 func InitClients(router *gin.Engine) {
@@ -33,6 +34,7 @@ func AddClient(c *gin.Context) {
 	name := c.PostForm("name")*/
 	var client *entity.Client
 	c.BindJSON(&client)
+	fmt.Println(client)
 	c.JSON(http.StatusOK, database.AddClient(client))
 }
 
