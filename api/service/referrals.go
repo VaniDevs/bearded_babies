@@ -8,13 +8,6 @@ import (
 	"strconv"
 )
 
-func InitReferrals(router *gin.Engine) {
-	router.GET("/referrals", Referrals)
-	router.POST("/referrals", AddReferral)
-	router.GET("/referrals/:id", Referral)
-	router.PUT("/referrals/:id", PutReferral)
-}
-
 func Referrals(c *gin.Context) {
 	_, _range, _sort := GetListParams(c)
 	referrals := database.Referrals(_range, _sort)

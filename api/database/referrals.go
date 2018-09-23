@@ -35,18 +35,41 @@ func AddReferral(referral *entity.Referral) *entity.Referral {
 		"($1,$2,$3) returning id;", referral.ClientID, referral.Appointment1, referral.Appointment2).Scan(&insertId)
 	checkErr(err)
 	referral.ID = insertId
+
+	addReferralGear(db, referral)
+
 	return referral
 }
 
 func GetReferral(id int) *entity.Referral {
 	db := getDatabase()
 	defer db.Close()
+
 	rows, err := db.Query("SELECT id, client_id, appointment1, appointment2 FROM referral WHERE id = $1", id)
 	checkErr(err)
+
 	var referral *entity.Referral
 	if rows.Next() {
 		referral = readReferral(rows)
 	}
+	rows, err = db.Query("SELECT gear_id, status FROM referral_gear WHERE referral_id = $1", id)
+	checkErr(err)
+
+	referral.Requested = []int{}
+	referral.Unavailable = []int{}
+
+	for rows.Next() {
+		var gearId, status int
+		err := rows.Scan(&gearId, &status)
+		checkErr(err)
+
+		if status == 1 {
+			referral.Requested = append(referral.Requested, gearId)
+		} else if status == 2 {
+			referral.Unavailable = append(referral.Unavailable, gearId)
+		}
+	}
+
 	return referral
 }
 
@@ -57,6 +80,11 @@ func UpdateReferral(referral *entity.Referral) {
 	_, err := db.Query("UPDATE referral SET client_id = $2, appointment1 = $3, appointment2 = $4 WHERE id = $1",
 		referral.ID, referral.ClientID, referral.Appointment1, referral.Appointment2)
 	checkErr(err)
+
+	_, err = db.Query("DELETE FROM referral WHERE id = $1", referral.ID)
+	checkErr(err)
+
+	addReferralGear(db, referral)
 }
 
 func readReferral(rows *sql.Rows) *entity.Referral {
@@ -67,4 +95,17 @@ func readReferral(rows *sql.Rows) *entity.Referral {
 	checkErr(err)
 	referral := &entity.Referral{ID: id, ClientID: client_id, Appointment1: appointment1, Appointment2: appointment2}
 	return referral
+}
+
+func addReferralGear(db *sql.DB, referral *entity.Referral) {
+	for _, gear := range referral.Requested {
+		_, err := db.Exec("INSERT INTO referral_gear (referral_id, gear_id, status) VALUES ($1, $2, $3)",
+			referral.ID, gear, 1)
+		checkErr(err)
+	}
+	for _, gear := range referral.Unavailable {
+		_, err := db.Exec("INSERT INTO referral_gear (referral_id, gear_id, status) VALUES ($1, $2, $3)",
+			referral.ID, gear, 2)
+		checkErr(err)
+	}
 }

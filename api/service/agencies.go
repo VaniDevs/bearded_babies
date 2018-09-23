@@ -8,13 +8,6 @@ import (
 	"strconv"
 )
 
-func InitAgencies(router *gin.Engine) {
-	router.GET("/agencies", Agencies)
-	router.POST("/agencies", AddAgency)
-	router.GET("/agencies/:id", Agency)
-	router.PUT("/agencies/:id", PutAgency)
-}
-
 func Agencies(c *gin.Context) {
 	_filter, _range, _sort := GetListParams(c)
 	agencies := database.Agencies(_range, _sort, _filter)

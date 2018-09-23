@@ -8,10 +8,6 @@ import (
 	"time"
 )
 
-func InitSchedule(router *gin.Engine) {
-	router.GET("/schedules", Schedules)
-}
-
 func Schedules(c *gin.Context) {
 	t := time.Date(2018, 9, 1, 0, 0, 0, 0, time.UTC)
 	intervals := allIntervals(t, 30)
