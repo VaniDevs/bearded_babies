@@ -11,10 +11,10 @@ func Clients(_range []int, _sort []string) []*entity.Client {
 	db := getDatabase()
 	defer db.Close()
 
-	query := "SELECT id, status, name, DOB, childDOB, phone, email, city, address1, address2, notification, agency_id, " +
+	query := "SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, notification, agency_id, " +
 		"unemployed, newcomer, homeless, special_needs FROM client"
 	if len(_sort) >= 2 {
-		query = fmt.Sprintf("SELECT id, status, name, DOB, childDOB, phone, email, city, address1, address2, "+
+		query = fmt.Sprintf("SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, "+
 			"notification, agency_id, unemployed, newcomer, homeless, special_needs FROM client ORDER BY %s %s",
 			_sort[0], _sort[1])
 	}
@@ -34,7 +34,7 @@ func AddClient(client *entity.Client) *entity.Client {
 	defer db.Close()
 
 	var insertId int
-	err := db.QueryRow("INSERT INTO client(status, name, DOB, childDOB, phone, email, city, address1, address2, "+
+	err := db.QueryRow("INSERT INTO client(status, name, dob, childdob, phone, email, city, address1, address2, "+
 		"notification, agency_id, unemployed, newcomer, homeless, special_needs) VALUES "+
 		"($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13,$14,$15) returning id;", client.Status, client.Name, client.DOB,
 		client.ChildDOB, client.Phone, client.Email, client.City, client.Address1, client.Address2, client.Notification,
@@ -47,7 +47,7 @@ func AddClient(client *entity.Client) *entity.Client {
 func GetClient(id int) *entity.Client {
 	db := getDatabase()
 	defer db.Close()
-	rows, err := db.Query("SELECT id, status, name, DOB, childDOB, phone, email, city, address1, address2, notification, "+
+	rows, err := db.Query("SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, notification, "+
 		"agency_id, unemployed, newcomer, homeless, special_needs FROM client WHERE id = $1", id)
 	checkErr(err)
 	var client *entity.Client
@@ -61,7 +61,7 @@ func UpdateClient(client *entity.Client) {
 	db := getDatabase()
 	defer db.Close()
 
-	_, err := db.Query("UPDATE client SET status = $2, name = $3, DOB = $4, childDOB = $5, phone = $6, email = $7, "+
+	_, err := db.Query("UPDATE client SET status = $2, name = $3, dob = $4, childdob = $5, phone = $6, email = $7, "+
 		"city = $8, address1 = $9, address2 = $10, notification = $11, agency_id = $12, unemployed = $13, newcomer = $14, "+
 		"homeless = $15, special_needs = $16 WHERE id = $1", client.ID, client.Status, client.Name, client.DOB,
 		client.ChildDOB, client.Phone, client.Email, client.City, client.Address1, client.Address2, client.Notification,
