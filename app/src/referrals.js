@@ -1,6 +1,6 @@
 import React from 'react';
 import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, DateField, DateInput, TextInput, LongTextInput, SelectInput, ReferenceField, ReferenceInput, ImageField, ImageInput, FormDataConsumer } from 'react-admin';
-import NoteIcon from '@material-ui/icons/Note';
+import ReplyAll from '@material-ui/icons/ReplyAll';
 
 const gearStatus = [
     {id: 0, name: "Not needed"},
@@ -9,7 +9,7 @@ const gearStatus = [
 ];
 
 
-export const ReferralsIcon = NoteIcon;
+export const ReferralsIcon = ReplyAll;
 
 export const ReferralsList = ({ permissions, ...props }) => (
     <List {...props}>

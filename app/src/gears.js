@@ -1,8 +1,8 @@
 import React from 'react';
 import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, TextInput, LongTextInput, SelectInput, ReferenceField, ReferenceInput, ImageField, ImageInput, FormDataConsumer } from 'react-admin';
-import NoteIcon from '@material-ui/icons/Note';
+import ChildFriendly from '@material-ui/icons/ChildFriendly';
 
-export const GearIcon = NoteIcon;
+export const GearIcon = ChildFriendly;
 
 export const GearList = (props) => (
     <List {...props}>

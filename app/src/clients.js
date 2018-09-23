@@ -22,7 +22,7 @@ import {
     FormDataConsumer,
     required
 } from 'react-admin';
-import NoteIcon from '@material-ui/icons/Note';
+import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const clientStatus = [
     {id: 0, name: "Pending"},
@@ -30,7 +30,7 @@ const clientStatus = [
     {id: 2, name: "Declined"}
 ];
 
-export const ClientsIcon = NoteIcon;
+export const ClientsIcon = AccountCircle;
 
 export const ClientsList = ({ permissions, ...props }) => (
     <List {...props}>

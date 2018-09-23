@@ -1,9 +1,9 @@
 import React from 'react';
 import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, TextInput, LongTextInput, SelectInput, ReferenceField, ReferenceInput, ImageField, ImageInput, FormDataConsumer } from 'react-admin';
 import { required } from 'react-admin';
-import NoteIcon from '@material-ui/icons/Note';
+import Assignment from '@material-ui/icons/Assignment';
 
-export const AgenciesIcon = NoteIcon;
+export const AgenciesIcon = Assignment;
 
 export const AgenciesList = (props) => (
     <List {...props} filter={{role: 2}}>
