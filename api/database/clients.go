@@ -2,6 +2,7 @@ package database
 
 import (
 	"../entity"
+	"../notification"
 	"database/sql"
 	"fmt"
 	"time"
@@ -79,6 +80,9 @@ func GetClient(id int) *entity.Client {
 }
 
 func UpdateClient(client *entity.Client) {
+
+	savedClient := GetClient(client.ID)
+
 	db := getDatabase()
 	defer db.Close()
 
@@ -88,6 +92,10 @@ func UpdateClient(client *entity.Client) {
 		client.ChildDOB, client.Phone, client.Email, client.City, client.Address1, client.Address2,
 		client.AgencyId, client.Unemployed, client.Newcomer, client.Homeless, client.SpecialNeeds)
 	checkErr(err)
+
+	if savedClient.Status == 0 && client.ID == 1 {
+		notification.Send(client.Phone)
+	}
 
 }
 
