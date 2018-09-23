@@ -6,24 +6,41 @@ import (
 	"fmt"
 )
 
-func Referrals(_range []int, _sort []string) []*entity.Referral {
+func Referrals(_range []int, _sort []string, userId int, role int) []*entity.Referral {
 	db := getDatabase()
 	defer db.Close()
 
-	query := "SELECT id, client_id, appointment1, appointment2 FROM referral"
-	if len(_sort) >= 2 {
-		query = fmt.Sprintf("SELECT id, client_id, appointment1, appointment2 FROM referral ORDER BY %s %s",
-			_sort[0], _sort[1])
-	}
-	rows, err := db.Query(query)
-	checkErr(err)
+	if role == 1 {
+		query := "SELECT id, client_id, appointment1, appointment2 FROM referral"
+		if len(_sort) >= 2 {
+			query = fmt.Sprintf("SELECT id, client_id, appointment1, appointment2 FROM referral ORDER BY %s %s",
+				_sort[0], _sort[1])
+		}
+		rows, err := db.Query(query)
+		checkErr(err)
 
-	referrals := []*entity.Referral{}
-	for rows.Next() {
-		referral := readReferral(rows)
-		referrals = append(referrals, referral)
+		referrals := []*entity.Referral{}
+		for rows.Next() {
+			referral := readReferral(rows)
+			referrals = append(referrals, referral)
+		}
+		return referrals
+	} else {
+		query := "SELECT id, client_id, appointment1, appointment2 FROM referral as r INNER JOIN clients as c ON c.id = r.client_id WHERE c.agency_id = $1"
+		if len(_sort) >= 2 {
+			query = fmt.Sprintf("SELECT id, client_id, appointment1, appointment2 FROM referral as r INNER JOIN clients as c ON c.id = r.client_id WHERE c.agency_id = $1 ORDER BY %s %s",
+				_sort[0], _sort[1])
+		}
+		rows, err := db.Query(query, userId)
+		checkErr(err)
+
+		referrals := []*entity.Referral{}
+		for rows.Next() {
+			referral := readReferral(rows)
+			referrals = append(referrals, referral)
+		}
+		return referrals
 	}
-	return referrals
 }
 
 func AddReferral(referral *entity.Referral) *entity.Referral {

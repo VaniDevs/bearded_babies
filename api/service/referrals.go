@@ -3,14 +3,18 @@ package service
 import (
 	"../database"
 	"../entity"
+	"github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
 )
 
 func Referrals(c *gin.Context) {
+	claims := jwt.ExtractClaims(c)
+	id := int(claims["id"].(float64))
+	role := int(claims["role"].(float64))
 	_, _range, _sort := GetListParams(c)
-	referrals := database.Referrals(_range, _sort)
+	referrals := database.Referrals(_range, _sort, id, role)
 	SetContentRange(c, "referrals", 0, len(referrals), len(referrals))
 	c.JSON(http.StatusOK, referrals)
 }
