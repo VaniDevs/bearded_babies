@@ -19,6 +19,7 @@ func main() {
 	service.InitClients(router)
 	service.InitGears(router)
 	service.InitReferrals(router)
+	service.InitSchedule(router)
 	router.Run() // listen and serve on 0.0.0.0:8080
 }
 
