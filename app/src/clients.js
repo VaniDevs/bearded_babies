@@ -34,6 +34,11 @@ export const ClientsList = ({ permissions, ...props }) => (
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />
+            {permissions === 'admin' ?
+                <ReferenceField label="Agency" source="agencyId" reference="agencies">
+                    <TextField source="name" />
+                </ReferenceField>
+            : null}
             <TextField source="phone" />
             <TextField source="email" />
             {permissions === 'admin' ?

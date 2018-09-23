@@ -42,8 +42,8 @@ type Gear struct {
 type Referral struct {
 	ID           int      `json:"id"`
 	ClientID     int      `json:"clientId"`
-	Appointment1 NullTime `json:"appointment1"`
-	Appointment2 NullTime `json:"appointment2"`
+	Appointment1 time.Time `json:"appointment1"`
+	Appointment2 time.Time `json:"appointment2"`
 	Requested    []int    `json:"requested"`
 	Unavailable  []int    `json:"unavailable"`
 }

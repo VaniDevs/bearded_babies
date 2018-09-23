@@ -104,6 +104,8 @@ func main() {
 
 	router := initRouter()
 	router.POST("/login", authMiddleware.LoginHandler)
+	router.GET("/appointments/:id", service.Appointment)
+    router.PUT("/appointments/:id", service.PutAppointment)
 
 	router.NoRoute(authMiddleware.MiddlewareFunc(), func(c *gin.Context) {
 		claims := jwt.ExtractClaims(c)

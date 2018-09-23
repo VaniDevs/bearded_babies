@@ -14,11 +14,11 @@ export const ReferralsList = ({ permissions, ...props }) => (
     <List {...props}>
         <Datagrid>
             <TextField source="id" />
-            <ReferenceField label="Client" source="client_id" reference="clients">
+            <ReferenceField label="Client" source="clientId" reference="clients">
                 <TextField source="name" />
             </ReferenceField>
-            <DateField source="appointment1"/>
-            <DateField source="appointment2"/>
+            <DateField source="appointment_1"/>
+            <DateField source="appointment_2"/>
             <EditButton />
         </Datagrid>
     </List>
@@ -32,31 +32,15 @@ export const ReferralsEdit = ({ permissions, ...props }) => (
     <Edit title={<ReferralsTitle />} {...props}>
         <SimpleForm>
             <DisabledInput source="id" />
-            <ReferenceInput label="Client" fullWidth source="client_id" reference="clients">
+            <ReferenceInput label="Client" fullWidth source="clientId" reference="clients">
                 <SelectInput optionText="name" />
             </ReferenceInput>
-            <ReferenceArrayInput label="Requested gears" fullWidth source="requestedGears" defaultValue={[]} reference="gears">
+            <ReferenceArrayInput label="Requested gears" fullWidth source="requested" defaultValue={[]} reference="gears">
                 <SelectArrayInput optionText="name"/>
             </ReferenceArrayInput>
-            <ReferenceArrayInput label="Unavailable gears" fullWidth source="unavailableGears" defaultValue={[]} reference="gears">
+            <ReferenceArrayInput label="Unavailable gears" fullWidth source="unavailable" defaultValue={[]} reference="gears">
                 <SelectArrayInput optionText="name"/>
             </ReferenceArrayInput>
-            <DateInput source="appointment1_date"/>
-            <FormDataConsumer>
-                {({ formData }) =>
-                    <ReferenceInput label="Appointment1 Time" source="appointment1" reference="appointments" filter={{date: formData.appointment1_date}}>
-                        <SelectInput optionText="date" />
-                    </ReferenceInput>
-                }
-            </FormDataConsumer>
-            <DateInput source="appointment2_date"/>
-            <FormDataConsumer>
-                {({ formData }) =>
-                    <ReferenceInput label="Appointment2 Time" source="appointment2" reference="appointments" filter={{date: formData.appointment2_date}}>
-                        <SelectInput optionText="date" />
-                    </ReferenceInput>
-                }
-            </FormDataConsumer>
         </SimpleForm>
     </Edit>
 );
@@ -64,13 +48,13 @@ export const ReferralsEdit = ({ permissions, ...props }) => (
 export const ReferralsCreate = ({ permissions, ...props }) => (
     <Create title="Create a referral" {...props}>
         <SimpleForm>
-            <ReferenceInput label="Client" fullWidth source="client_id" reference="clients">
+            <ReferenceInput label="Client" fullWidth source="clientId" reference="clients">
                 <SelectInput optionText="name" />
             </ReferenceInput>
-            <ReferenceArrayInput label="Requested gears" fullWidth source="requestedGears" defaultValue={[]} reference="gears">
+            <ReferenceArrayInput label="Requested gears" fullWidth source="requested" defaultValue={[]} reference="gears">
                 <SelectArrayInput optionText="name"/>
             </ReferenceArrayInput>
-            <ReferenceArrayInput label="Unavailable gears" fullWidth source="unavailableGears" defaultValue={[]} reference="gears">
+            <ReferenceArrayInput label="Unavailable gears" fullWidth source="unavailable" defaultValue={[]} reference="gears">
                 <SelectArrayInput optionText="name"/>
             </ReferenceArrayInput>
         </SimpleForm>

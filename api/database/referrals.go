@@ -4,6 +4,7 @@ import (
 	"../entity"
 	"database/sql"
 	"fmt"
+	"time"
 )
 
 func Referrals(_range []int, _sort []string, userId int, role int) []*entity.Referral {
@@ -26,9 +27,9 @@ func Referrals(_range []int, _sort []string, userId int, role int) []*entity.Ref
 		}
 		return referrals
 	} else {
-		query := "SELECT id, client_id, appointment1, appointment2 FROM referral as r INNER JOIN clients as c ON c.id = r.client_id WHERE c.agency_id = $1"
+		query := "SELECT r.id, client_id, appointment1, appointment2 FROM referral as r INNER JOIN client as c ON c.id = r.client_id WHERE c.agency_id = $1"
 		if len(_sort) >= 2 {
-			query = fmt.Sprintf("SELECT id, client_id, appointment1, appointment2 FROM referral as r INNER JOIN clients as c ON c.id = r.client_id WHERE c.agency_id = $1 ORDER BY %s %s",
+			query = fmt.Sprintf("SELECT r.id, client_id, appointment1, appointment2 FROM referral as r INNER JOIN client as c ON c.id = r.client_id WHERE c.agency_id = $1 ORDER BY %s %s",
 				_sort[0], _sort[1])
 		}
 		rows, err := db.Query(query, userId)
@@ -46,10 +47,10 @@ func Referrals(_range []int, _sort []string, userId int, role int) []*entity.Ref
 func AddReferral(referral *entity.Referral) *entity.Referral {
 	db := getDatabase()
 	defer db.Close()
-
+    t := time.Date(1, 1, 0, 0, 0, 0, 0, time.UTC)
 	var insertId int
-	err := db.QueryRow("INSERT INTO agency(client_id, appointment1, appointment2) VALUES "+
-		"($1,$2,$3) returning id;", referral.ClientID, referral.Appointment1, referral.Appointment2).Scan(&insertId)
+	err := db.QueryRow("INSERT INTO referral (client_id, appointment1, appointment2) VALUES "+
+		"($1,$2,$3) returning id;", referral.ClientID, t, t).Scan(&insertId)
 	checkErr(err)
 	referral.ID = insertId
 
@@ -98,7 +99,7 @@ func UpdateReferral(referral *entity.Referral) {
 		referral.ID, referral.ClientID, referral.Appointment1, referral.Appointment2)
 	checkErr(err)
 
-	_, err = db.Query("DELETE FROM referral WHERE id = $1", referral.ID)
+	_, err = db.Query("DELETE FROM referral_gear WHERE referral_id = $1", referral.ID)
 	checkErr(err)
 
 	addReferralGear(db, referral)
@@ -106,7 +107,7 @@ func UpdateReferral(referral *entity.Referral) {
 
 func readReferral(rows *sql.Rows) *entity.Referral {
 	var id, client_id int
-	var appointment1, appointment2 entity.NullTime
+	var appointment1, appointment2 time.Time
 
 	err := rows.Scan(&id, &client_id, &appointment1, &appointment2)
 	checkErr(err)

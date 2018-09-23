@@ -28,12 +28,12 @@ const dataProvider = simpleRestProvider(apiMethod(), httpClient);
 
 render(
     <Admin customRoutes={customRoutes} dataProvider={dataProvider} authProvider={authProvider} history={history}>
-        {permissions => permissions ? [
-        permissions === 'admin' ? <Resource name="agencies" list={AgenciesList} edit={AgenciesEdit} create={AgenciesCreate} icon={AgenciesIcon} /> : null,
-        <Resource name="clients" list={ClientsList} edit={ClientsEdit} create={ClientsCreate} icon={ClientsIcon} />,
-        permissions === 'admin' ? <Resource name="gears" list={GearList} edit={GearEdit} create={GearCreate} icon={GearIcon} /> : <Resource name="gears" />,
-        <Resource name="referrals" list={ReferralsList} edit={ReferralsEdit} create={permissions === 'agent' ? ReferralsCreate : null} icon={ReferralsIcon} />,
-        ] : [<Resource name="appointments" edit={AppointmentsEdit} icon={AppointmentsIcon} />]}
+        {permissions => [
+        permissions === 'admin' ? <Resource name="agencies" options={{label: "Agencies"}} list={AgenciesList} edit={AgenciesEdit} create={AgenciesCreate} icon={AgenciesIcon} /> : null,
+        <Resource name="clients" options={{label: "Clients"}} list={ClientsList} edit={ClientsEdit} create={ClientsCreate} icon={ClientsIcon} />,
+        permissions === 'admin' ? <Resource name="gears" options={{label: "Gears"}} list={GearList} edit={GearEdit} create={GearCreate} icon={GearIcon} /> : <Resource name="gears" />,
+        <Resource name="referrals" options={{label: "Referrals"}} list={ReferralsList} edit={ReferralsEdit} create={permissions === 'agent' ? ReferralsCreate : null} icon={ReferralsIcon} />,
+        ]}
     </Admin>,
     document.getElementById('root')
 );

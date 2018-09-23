@@ -12,6 +12,7 @@ export const AgenciesList = (props) => (
             <TextField source="name" />
             <TextField source="phone" />
             <TextField source="email" />
+            <TextField source="contact" />
             <EditButton />
         </Datagrid>
     </List>
