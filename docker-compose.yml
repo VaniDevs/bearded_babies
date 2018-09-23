@@ -10,9 +10,7 @@ services:
     - 8081:8080
 
   postgres:
-    build:
-      context: .
-      dockerfile: postgres/Dockerfile
+    image: postgres:10.4-alpine
     restart: always
     env_file: .env
     environment:
@@ -20,7 +18,8 @@ services:
       POSTGRES_USER: ${POSTGRES_USER}
       POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
     volumes:
-    - ../bb-data:/var/lib/postgresql/data
+      - ./postgres:/docker-entrypoint-initdb.d
+      - ../bb-data:/var/lib/postgresql/data
     healthcheck:
       test: psql -U postgres -l
       interval: 10s

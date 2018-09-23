@@ -1,5 +1,5 @@
 const _ = require('lodash');
-const host = `http://${window.location.hostname}:8082/admin`;
+const host = `http://${window.location.hostname}:8081/`;
 
 export function apiMethod(name) {
     if (name != null && name.length > 0)
