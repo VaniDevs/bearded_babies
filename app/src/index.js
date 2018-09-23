@@ -29,9 +29,9 @@ const dataProvider = simpleRestProvider(apiMethod(), httpClient);
 render(
     <Admin customRoutes={customRoutes} dataProvider={dataProvider} authProvider={authProvider} history={history}>
         {permissions => [
-        permissions === 'admin' ? <Resource name="agencies" options={{label: "Agencies"}} list={AgenciesList} edit={AgenciesEdit} create={AgenciesCreate} icon={AgenciesIcon} /> : null,
         <Resource name="clients" options={{label: "Clients"}} list={ClientsList} edit={ClientsEdit} create={ClientsCreate} icon={ClientsIcon} />,
         <Resource name="referrals" options={{label: "Referrals"}} list={ReferralsList} edit={ReferralsEdit} create={permissions === 'agent' ? ReferralsCreate : null} icon={ReferralsIcon} />,
+        permissions === 'admin' ? <Resource name="agencies" options={{label: "Agencies"}} list={AgenciesList} edit={AgenciesEdit} create={AgenciesCreate} icon={AgenciesIcon} /> : null,
         permissions === 'admin' ? <Resource name="gears" options={{label: "Gears"}} list={GearList} edit={GearEdit} create={GearCreate} icon={GearIcon} /> : <Resource name="gears" />,
         ]}
     </Admin>,
