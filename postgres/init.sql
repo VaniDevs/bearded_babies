@@ -57,6 +57,34 @@ CREATE TABLE "public"."gear" (
     CONSTRAINT "gear_id" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
+INSERT INTO "gear" ("name") VALUES
+('Crib'),
+('Bassinet'),
+('Pack ''n play'),
+('Single stroller'),
+('Double stroller'),
+('Front carrier'),
+('Bouncy chair'),
+('Swing'),
+('Exersaucer'),
+('Jolly jumper'),
+('Bumbo'),
+('High chair'),
+('Bathtub'),
+('Diapers'),
+('Diaper bag'),
+('Blankets'),
+('Crib bedding'),
+('Sleepsacks'),
+('Clothing'),
+('Toys/books'),
+('Nursing pillow'),
+('Safety gate'),
+('Bottles'),
+('Feeding accessories'),
+('Monitor'),
+('Safety gear'),
+('Breast pump');
 
 DROP TABLE IF EXISTS "referral";
 DROP SEQUENCE IF EXISTS referral_id_seq;
@@ -83,3 +111,11 @@ CREATE TABLE "public"."referral_gear" (
 
 
 -- 2018-09-22 20:36:44.110215+00
+
+-- Demo
+INSERT INTO "agency" ("login", "password", "role", "name", "phone", "email", "city", "address1", "address2", "contact") VALUES
+('agency', '21232f297a57a5a743894a0e4a801fc3',	2,	'Awesome Agency',	'5551234567',	'agency@gmail.com',	'Vancouver',	'123 Main st.',	'',	'Agent');
+
+INSERT INTO "client" (status, name, dob, childdob, phone, email, city, address1, address2, agency_id, unemployed, newcomer, homeless, special_needs) VALUES
+(0, 'John Smith',	'1990-01-01', '2017-01-01',	'5551234567',	'john@gmail.com',	'Richmond',	'123 No.3 Rd.',	'',	2, 1, 1, 0, 0);
+--

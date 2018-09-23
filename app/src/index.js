@@ -11,6 +11,7 @@ import { AgenciesList, AgenciesEdit, AgenciesCreate, AgenciesIcon } from './agen
 import {ClientsList, ClientsEdit, ClientsCreate, ClientsIcon} from './clients';
 import {GearList, GearEdit, GearCreate, GearIcon} from './gears';
 import {ReferralsList, ReferralsEdit, ReferralsCreate, ReferralsIcon} from './referrals';
+import {AppointmentsEdit, AppointmentsIcon} from './appointments';
 
 const history = createHistory();
 
@@ -27,12 +28,12 @@ const dataProvider = simpleRestProvider(apiMethod(), httpClient);
 
 render(
     <Admin customRoutes={customRoutes} dataProvider={dataProvider} authProvider={authProvider} history={history}>
-        {permissions => [
+        {permissions => permissions ? [
         permissions === 'admin' ? <Resource name="agencies" list={AgenciesList} edit={AgenciesEdit} create={AgenciesCreate} icon={AgenciesIcon} /> : null,
         <Resource name="clients" list={ClientsList} edit={ClientsEdit} create={ClientsCreate} icon={ClientsIcon} />,
-        permissions === 'admin' ? <Resource name="gears" list={GearList} edit={GearEdit} create={GearCreate} icon={GearIcon} /> : null,
-        <Resource name="referrals" list={ReferralsList} edit={ReferralsEdit} create={permissions === 'agent' ? ReferralsCreate : null} icon={ReferralsIcon} />
-        ]}
+        permissions === 'admin' ? <Resource name="gears" list={GearList} edit={GearEdit} create={GearCreate} icon={GearIcon} /> : <Resource name="gears" />,
+        <Resource name="referrals" list={ReferralsList} edit={ReferralsEdit} create={permissions === 'agent' ? ReferralsCreate : null} icon={ReferralsIcon} />,
+        ] : [<Resource name="appointments" edit={AppointmentsEdit} icon={AppointmentsIcon} />]}
     </Admin>,
     document.getElementById('root')
 );

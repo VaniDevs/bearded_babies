@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, TextInput, LongTextInput, SelectInput, ReferenceField, ReferenceInput, ImageField, ImageInput, FormDataConsumer } from 'react-admin';
+import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, TextInput, SelectInput, ReferenceField, ReferenceInput, FormDataConsumer } from 'react-admin';
 import { required } from 'react-admin';
 import Assignment from '@material-ui/icons/Assignment';
 
@@ -12,7 +12,7 @@ export const AgenciesList = (props) => (
             <TextField source="name" />
             <TextField source="phone" />
             <TextField source="email" />
-            <EditButton basePath="/agencies" />
+            <EditButton />
         </Datagrid>
     </List>
 );

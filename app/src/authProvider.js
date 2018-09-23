@@ -2,29 +2,35 @@ import { AUTH_LOGIN, AUTH_LOGOUT, AUTH_ERROR, AUTH_CHECK, AUTH_GET_PERMISSIONS }
 import { apiMethod } from './api'
 import decodeJwt from 'jwt-decode';
 
-export default (type, params) => {
-    if (type === AUTH_LOGIN) {
-        // const { username, password } = params;
-        // const request = new Request(apiMethod("authenticate"), {
-        //     method: 'POST',
-        //     body: JSON.stringify({ username, password }),
-        //     headers: new Headers({ 'Content-Type': 'application/json' }),
-        // });
-        // return fetch(request)
-        //     .then(response => {
-        //         if (response.status < 200 || response.status >= 300) {
-        //             throw new Error(response.statusText);
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(({ token }) => {
-        //         const decodedToken = decodeJwt(token);
-        //         localStorage.setItem('token', token);
-        //         localStorage.setItem('role', decodedToken.role);
-        //     });
+const roles = {
+    1: 'admin',
+    2: 'agent'
+};
 
-        localStorage.setItem('role', 'admin');
-        return Promise.resolve();
+export default (type, params) => {
+    console.log(type);
+    console.log(params);
+    console.log(window.location.pathname);
+
+    if (type === AUTH_LOGIN) {
+        const { username, password } = params;
+        const request = new Request(apiMethod("login", true), {
+            method: 'POST',
+            body: JSON.stringify({ username, password }),
+            headers: new Headers({ 'Content-Type': 'application/json' }),
+        });
+        return fetch(request)
+            .then(response => {
+                if (response.status < 200 || response.status >= 300) {
+                    throw new Error(response.statusText);
+                }
+                return response.json();
+            })
+            .then(({ token }) => {
+                const decodedToken = decodeJwt(token);
+                localStorage.setItem('token', token);
+                localStorage.setItem('role', roles[decodedToken.role]);
+            });
     }
 
     if (type === AUTH_LOGOUT) {
@@ -44,30 +50,36 @@ export default (type, params) => {
     }
 
     if (type === AUTH_CHECK) {
-        // const token = localStorage.getItem('token');
-        // if (token) {
-        //     const request = new Request(apiMethod("validate"), {
-        //         method: 'GET',
-        //         headers: new Headers({'Authorization': `Bearer ${token}`})
-        //     });
-        //     return fetch(request)
-        //         .then(response => {
-        //             if (response.status < 200 || response.status >= 300) {
-        //                 throw new Error(response.statusText);
-        //             }
-        //             return response.json();
-        //         })
-        //         .then(({ token }) => {
-        //             localStorage.setItem('token', token);
-        //         });
-        // } else {
-        //     return Promise.reject();
-        // }
-
-        return Promise.resolve();
+        if (window.location.pathname.startsWith("/appointments")) {
+            return Promise.resolve('');
+        }
+        const token = localStorage.getItem('token');
+        if (token) {
+            const request = new Request(apiMethod("refresh_token"), {
+                method: 'GET',
+                headers: new Headers({'Authorization': `Bearer ${token}`})
+            });
+            return fetch(request)
+                .then(response => {
+                    if (response.status < 200 || response.status >= 300) {
+                        throw new Error(response.statusText);
+                    }
+                    return response.json();
+                })
+                .then(({ token }) => {
+                    const decodedToken = decodeJwt(token);
+                    localStorage.setItem('token', token);
+                    localStorage.setItem('role', roles[decodedToken.role]);
+                });
+        } else {
+            return Promise.reject();
+        }
     }
 
     if (type === AUTH_GET_PERMISSIONS) {
+        if (window.location.pathname.startsWith("/appointments")) {
+            return Promise.resolve('');
+        }
         const role = localStorage.getItem('role');
         return role ? Promise.resolve(role) : Promise.reject();
     }

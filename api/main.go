@@ -43,14 +43,17 @@ func main() {
 			if v, ok := data.(*User); ok {
 				return jwt.MapClaims{
 					identityKey: v.ID,
+					"role": v.Role,
+
 				}
 			}
 			return jwt.MapClaims{}
 		},
 		IdentityHandler: func(c *gin.Context) interface{} {
 			claims := jwt.ExtractClaims(c)
+			fmt.Println(claims)
 			return &User{
-				ID: claims["id"].(int),
+				ID: int(claims["id"].(float64)),
 			}
 		},
 		Authenticator: func(c *gin.Context) (interface{}, error) {

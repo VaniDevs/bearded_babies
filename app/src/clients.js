@@ -10,14 +10,11 @@ import {
     EditButton,
     DisabledInput,
     TextInput,
-    LongTextInput,
     SelectInput,
     DateField,
     DateInput,
     ReferenceField,
     ReferenceInput,
-    ImageField,
-    ImageInput,
     BooleanInput,
     FormDataConsumer,
     required
@@ -25,7 +22,7 @@ import {
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
 const clientStatus = [
-    {id: 0, name: "Pending"},
+    {id: 0, name: "New"},
     {id: 1, name: "Approved"},
     {id: 2, name: "Declined"}
 ];
@@ -40,9 +37,9 @@ export const ClientsList = ({ permissions, ...props }) => (
             <TextField source="phone" />
             <TextField source="email" />
             {permissions === 'admin' ?
-                <SelectField source="name" choices={clientStatus}/>
+                <SelectField source="status" optionText="name" choices={clientStatus}/>
                 : null}
-            <EditButton basePath="/clients" />
+            <EditButton />
         </Datagrid>
     </List>
 );
@@ -51,13 +48,17 @@ const ClientsTitle = ({ record }) => {
     return <span>Client <b>{record ? `"${record.name}"` : ''}</b></span>;
 };
 
+const parseDate = function (v) {
+    return v + "T00:00:00Z"
+};
+
 export const ClientsEdit = ({ permissions, ...props }) => (
     <Edit title={<ClientsTitle />} {...props}>
         <SimpleForm>
             <DisabledInput source="id" />
             <TextInput source="name" fullWidth validate={required()}/>
-            <DateInput label="DOB" source="dob" validate={required()}/>
-            <DateInput label="Child DOB" source="childDob" validate={required()}/>
+            <DateInput label="DOB" source="dob" parse={parseDate} validate={required()}/>
+            <DateInput label="Child DOB" source="childDob" parse={parseDate} validate={required()}/>
             <TextInput source="address1" fullWidth validate={required()}/>
             <TextInput source="address2" fullWidth />
             <TextInput source="city" fullWidth validate={required()}/>
@@ -84,8 +85,8 @@ export const ClientsCreate = ({ permissions, ...props }) => (
     <Create title="Create a client" {...props}>
         <SimpleForm>
             <TextInput source="name" fullWidth validate={required()}/>
-            <DateInput label="DOB" source="dob" parse={v => v.toString() + " 00:00:00"} validate={required()}/>
-            <DateInput label="Child DOB" source="childDob" parse={v => v.toString() + " 00:00:00"} validate={required()}/>
+            <DateInput label="DOB" source="dob" parse={parseDate} validate={required()}/>
+            <DateInput label="Child DOB" source="childDob" parse={parseDate} validate={required()}/>
             <TextInput source="address1" fullWidth validate={required()}/>
             <TextInput source="address2" fullWidth />
             <TextInput source="city" fullWidth validate={required()}/>

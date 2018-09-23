@@ -24,7 +24,6 @@ func GetListParams(c *gin.Context) (string, []int, []string) {
             } else {
                 v1, ok1 := value.([]interface{})
                 if ok1 {
-                    fmt.Println(ok1)
                     replacer := strings.NewReplacer("[", "", "]", "")
                     where = append(where, replacer.Replace(fmt.Sprintf(" %s in (%v) ", key, v1)))
                 } else {

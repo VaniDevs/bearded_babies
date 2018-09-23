@@ -1,13 +1,12 @@
 import React from 'react';
-import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, DateField, DateInput, TextInput, LongTextInput, SelectInput, ReferenceField, ReferenceInput, ImageField, ImageInput, FormDataConsumer } from 'react-admin';
+import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, DateField, DateInput, TextInput, SelectInput, ReferenceField, ReferenceArrayInput, SelectArrayInput, ReferenceInput, FormDataConsumer } from 'react-admin';
 import ReplyAll from '@material-ui/icons/ReplyAll';
 
 const gearStatus = [
     {id: 0, name: "Not needed"},
-    {id: 1, name: "Needed"},
+    {id: 1, name: "Requested"},
     {id: 2, name: "Not available"}
 ];
-
 
 export const ReferralsIcon = ReplyAll;
 
@@ -20,7 +19,7 @@ export const ReferralsList = ({ permissions, ...props }) => (
             </ReferenceField>
             <DateField source="appointment1"/>
             <DateField source="appointment2"/>
-            <EditButton basePath="/referrals" />
+            <EditButton />
         </Datagrid>
     </List>
 );
@@ -33,9 +32,15 @@ export const ReferralsEdit = ({ permissions, ...props }) => (
     <Edit title={<ReferralsTitle />} {...props}>
         <SimpleForm>
             <DisabledInput source="id" />
-            <ReferenceInput label="Client" source="client_id" reference="clients">
+            <ReferenceInput label="Client" fullWidth source="client_id" reference="clients">
                 <SelectInput optionText="name" />
             </ReferenceInput>
+            <ReferenceArrayInput label="Requested gears" fullWidth source="requestedGears" defaultValue={[]} reference="gears">
+                <SelectArrayInput optionText="name"/>
+            </ReferenceArrayInput>
+            <ReferenceArrayInput label="Unavailable gears" fullWidth source="unavailableGears" defaultValue={[]} reference="gears">
+                <SelectArrayInput optionText="name"/>
+            </ReferenceArrayInput>
             <DateInput source="appointment1_date"/>
             <FormDataConsumer>
                 {({ formData }) =>
@@ -59,9 +64,15 @@ export const ReferralsEdit = ({ permissions, ...props }) => (
 export const ReferralsCreate = ({ permissions, ...props }) => (
     <Create title="Create a referral" {...props}>
         <SimpleForm>
-            <ReferenceInput label="Client" source="client_id" reference="clients">
+            <ReferenceInput label="Client" fullWidth source="client_id" reference="clients">
                 <SelectInput optionText="name" />
             </ReferenceInput>
+            <ReferenceArrayInput label="Requested gears" fullWidth source="requestedGears" defaultValue={[]} reference="gears">
+                <SelectArrayInput optionText="name"/>
+            </ReferenceArrayInput>
+            <ReferenceArrayInput label="Unavailable gears" fullWidth source="unavailableGears" defaultValue={[]} reference="gears">
+                <SelectArrayInput optionText="name"/>
+            </ReferenceArrayInput>
         </SimpleForm>
     </Create>
 );

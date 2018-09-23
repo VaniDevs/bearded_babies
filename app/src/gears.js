@@ -1,5 +1,5 @@
 import React from 'react';
-import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, TextInput, LongTextInput, SelectInput, ReferenceField, ReferenceInput, ImageField, ImageInput, FormDataConsumer } from 'react-admin';
+import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, TextInput, SelectInput, ReferenceField, ReferenceInput, FormDataConsumer } from 'react-admin';
 import ChildFriendly from '@material-ui/icons/ChildFriendly';
 
 export const GearIcon = ChildFriendly;
@@ -9,7 +9,7 @@ export const GearList = (props) => (
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />
-            <EditButton basePath="/gears" />
+            <EditButton />
         </Datagrid>
     </List>
 );
