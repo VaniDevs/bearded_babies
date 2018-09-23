@@ -11,6 +11,7 @@ import (
 	"github.com/sendgrid/sendgrid-go/helpers/mail"
 	"log"
 	"net/http"
+	"os"
 )
 
 func main() {
@@ -21,6 +22,7 @@ func main() {
 	service.InitReferrals(router)
 	service.InitSchedule(router)
 	router.Run() // listen and serve on 0.0.0.0:8080
+
 }
 
 func initRouter() *gin.Engine {
@@ -40,11 +42,12 @@ func original(origin string) bool {
 }
 
 func SendSms(text string, phoneNumber string) {
+	// TOOD: remove keys
 	values := map[string]string{
-		"api_key":    "7fa887f7",
-		"api_secret": "a0IKffluJqZBOdVP",
+		"api_key":    os.Getenv("NOTIFICATION_API_KEY"),
+		"api_secret": os.Getenv("NOTIFICATION_API_SECRET"),
 		"to":         phoneNumber,
-		"from":       "12892324939",
+		"from":       os.Getenv("NOTIFICATION_SMS_FROM"),
 		"text":       text}
 	jsonValue, _ := json.Marshal(values)
 	http.Post("https://rest.nexmo.com/sms/json", "application/json", bytes.NewBuffer(jsonValue))
@@ -56,7 +59,7 @@ func SendEmail(subject string, toName string, toEmail string, content string) {
 	plainTextContent := "and easy to do anywhere, even with Go"
 	htmlContent := content
 	message := mail.NewSingleEmail(from, subject, to, plainTextContent, htmlContent)
-	client := sendgrid.NewSendClient("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")
+	client := sendgrid.NewSendClient(os.Getenv("SANDGRID_API_KEY"))
 	response, err := client.Send(message)
 	if err != nil {
 		log.Println(err)
