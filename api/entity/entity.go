@@ -18,18 +18,16 @@ type Agency struct {
 
 type Client struct {
 	ID           int       `json:"id"`
-	Status       int       `json:"status"`
+	Status       int       `json:"status_id"`
 	Name         string    `json:"name"`
 	DOB          time.Time `json:"dob"`
 	ChildDOB     time.Time `json:"child_dob"`
 	Phone        string    `json:"phone"`
 	Email        string    `json:"email"`
-	Notification int       `json:"notification"`
 	City         string    `json:"city"`
 	Address1     string    `json:"address1"`
 	Address2     string    `json:"address2"`
-	Contact      string    `json:"contact"`
-	AgencyId     int       `json:"agencyId"`
+	AgencyId     int       `json:"agency_id"`
 	Unemployed   int       `json:"unemployed"`
 	Newcomer     int       `json:"newcomer"`
 	Homeless     int       `json:"homeless"`

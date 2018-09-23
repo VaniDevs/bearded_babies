@@ -15,7 +15,7 @@ export const GearList = (props) => (
 );
 
 const GearTitle = ({ record }) => {
-    return <span>Post {record ? `"${record.name}"` : ''}</span>;
+    return <span>Gear <b>{record ? `"${record.name}"` : ''}</b></span>;
 };
 
 export const GearEdit = (props) => (
@@ -28,7 +28,7 @@ export const GearEdit = (props) => (
 );
 
 export const GearCreate = (props) => (
-    <Create title="Create a user" {...props}>
+    <Create title="Create a gear" {...props}>
         <SimpleForm>
             <TextInput source="name" fullWidth/>
         </SimpleForm>

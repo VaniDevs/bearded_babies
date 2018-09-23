@@ -6,15 +6,16 @@ import (
 	"fmt"
 )
 
-func Agencies(_range []int, _sort []string) []*entity.Agency {
+func Agencies(_range []int, _sort []string, _filter string) []*entity.Agency {
 	db := getDatabase()
 	defer db.Close()
 
 	query := "SELECT id, login, password, role, name, phone, email, city, address1, address2, contact FROM agency"
+	if len(_filter) > 0 {
+	    query += fmt.Sprintf(" WHERE %s ", _filter)
+	}
 	if len(_sort) >= 2 {
-		query = fmt.Sprintf("SELECT id, login, password, role, name, phone, email, city, address1, address2, "+
-			"contact FROM agency ORDER BY %s %s",
-			_sort[0], _sort[1])
+	    query += fmt.Sprintf(" ORDER BY %s %s ", _sort[0], _sort[1])
 	}
 	rows, err := db.Query(query)
 	checkErr(err)

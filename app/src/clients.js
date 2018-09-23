@@ -5,6 +5,7 @@ import {
     Edit,
     Create,
     SimpleForm,
+    SelectField,
     TextField,
     EditButton,
     DisabledInput,
@@ -23,6 +24,12 @@ import {
 } from 'react-admin';
 import NoteIcon from '@material-ui/icons/Note';
 
+const clientStatus = [
+    {id: 0, name: "Pending"},
+    {id: 1, name: "Approved"},
+    {id: 2, name: "Declined"}
+];
+
 export const ClientsIcon = NoteIcon;
 
 export const ClientsList = ({ permissions, ...props }) => (
@@ -33,9 +40,7 @@ export const ClientsList = ({ permissions, ...props }) => (
             <TextField source="phone" />
             <TextField source="email" />
             {permissions === 'admin' ?
-                <ReferenceField label="Status" source="status_id" reference="client_statuses" linkType={false}>
-                    <TextField source="name" />
-                </ReferenceField>
+                <SelectField source="name" choices={clientStatus}/>
                 : null}
             <EditButton basePath="/clients" />
         </Datagrid>
@@ -51,27 +56,26 @@ export const ClientsEdit = ({ permissions, ...props }) => (
         <SimpleForm>
             <DisabledInput source="id" />
             <TextInput source="name" fullWidth validate={required()}/>
-            <DateInput source="DOB" fullWidth validate={required()}/>
-            <DateInput source="childDOB" fullWidth validate={required()}/>
+            <DateInput label="DOB" source="dob" validate={required()}/>
+            <DateInput label="Child DOB" source="childdob" validate={required()}/>
             <TextInput source="address1" fullWidth validate={required()}/>
             <TextInput source="address2" fullWidth />
             <TextInput source="city" fullWidth validate={required()}/>
-            <TextField source="phone" />
-            <TextField source="email" />
+            <TextInput source="phone" fullWidth/>
+            <TextInput source="email" fullWidth/>
             {permissions === 'admin' ?
-                <ReferenceInput label="Agency" source="agency_id" reference="agencies">
+                <ReferenceInput label="Agency" source="agency_id" reference="agencies" filter={{role: 2}} validate={required()}>
                     <SelectInput optionText="name" />
                 </ReferenceInput>
                 : null}
             {permissions === 'admin' ?
-                <ReferenceInput label="Status" source="status_id" reference="client_statuses">
-                    <SelectInput optionText="name" /> : null}
-                </ReferenceInput>
-                : null}
-            <BooleanInput source="unemployed" />
-            <BooleanInput source="newcomer" />
-            <BooleanInput source="homeless" />
-            <BooleanInput source="special_needs" />
+                <SelectInput label="Status" optionText="name" choices={clientStatus} validate={required()}/>
+                : null
+            }
+            <BooleanInput source="unemployed" format={v => !!v} parse={v => +v}/>
+            <BooleanInput source="newcomer" format={v => !!v} parse={v => +v}/>
+            <BooleanInput source="homeless" format={v => !!v} parse={v => +v}/>
+            <BooleanInput label="Special needs" source="special_needs" format={v => !!v} parse={v => +v}/>
         </SimpleForm>
     </Edit>
 );
@@ -80,27 +84,26 @@ export const ClientsCreate = ({ permissions, ...props }) => (
     <Create title="Create a client" {...props}>
         <SimpleForm>
             <TextInput source="name" fullWidth validate={required()}/>
-            <DateInput source="DOB" fullWidth validate={required()}/>
-            <DateInput source="childDOB" fullWidth validate={required()}/>
+            <DateInput label="DOB" source="dob" validate={required()}/>
+            <DateInput label="Child DOB" source="childdob" validate={required()}/>
             <TextInput source="address1" fullWidth validate={required()}/>
             <TextInput source="address2" fullWidth />
             <TextInput source="city" fullWidth validate={required()}/>
-            <TextField source="phone" />
-            <TextField source="email" />
+            <TextInput source="phone" fullWidth/>
+            <TextInput source="email" fullWidth/>
             {permissions === 'admin' ?
-                <ReferenceInput label="Agency" source="agency_id" reference="agencies">
+                <ReferenceInput label="Agency" source="agency_id" reference="agencies" filter={{role: 2}} validate={required()}>
                     <SelectInput optionText="name" />
                 </ReferenceInput>
                 : null}
             {permissions === 'admin' ?
-                <ReferenceInput label="Status" source="status_id" reference="client_statuses">
-                    <SelectInput optionText="name" /> : null}
-                </ReferenceInput>
-                : null}
-            <BooleanInput source="unemployed" />
-            <BooleanInput source="newcomer" />
-            <BooleanInput source="homeless" />
-            <BooleanInput source="special_needs" />
+                <SelectInput label="Status" optionText="name" choices={clientStatus} validate={required()}/>
+                : null
+            }
+            <BooleanInput source="unemployed" format={v => !!v} parse={v => +v}/>
+            <BooleanInput source="newcomer" format={v => !!v} parse={v => +v}/>
+            <BooleanInput source="homeless" format={v => !!v} parse={v => +v}/>
+            <BooleanInput label="Special needs" source="special_needs" format={v => !!v} parse={v => +v}/>
         </SimpleForm>
     </Create>
 );

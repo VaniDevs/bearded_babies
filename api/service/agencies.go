@@ -16,8 +16,8 @@ func InitAgencies(router *gin.Engine) {
 }
 
 func Agencies(c *gin.Context) {
-	_, _range, _sort := GetListParams(c)
-	agencies := database.Agencies(_range, _sort)
+	_filter, _range, _sort := GetListParams(c)
+	agencies := database.Agencies(_range, _sort, _filter)
 	SetContentRange(c, "agencies", 0, len(agencies), len(agencies))
 	c.JSON(http.StatusOK, agencies)
 }

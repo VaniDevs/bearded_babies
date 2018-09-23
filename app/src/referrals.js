@@ -2,6 +2,13 @@ import React from 'react';
 import { List, Datagrid, Edit, Create, SimpleForm, TextField, EditButton, DisabledInput, DateField, DateInput, TextInput, LongTextInput, SelectInput, ReferenceField, ReferenceInput, ImageField, ImageInput, FormDataConsumer } from 'react-admin';
 import NoteIcon from '@material-ui/icons/Note';
 
+const gearStatus = [
+    {id: 0, name: "Not needed"},
+    {id: 1, name: "Needed"},
+    {id: 2, name: "Not available"}
+];
+
+
 export const ReferralsIcon = NoteIcon;
 
 export const ReferralsList = ({ permissions, ...props }) => (
