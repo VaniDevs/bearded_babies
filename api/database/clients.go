@@ -7,26 +7,47 @@ import (
 	"time"
 )
 
-func Clients(_range []int, _sort []string) []*entity.Client {
+func Clients(_range []int, _sort []string, userId int, role int) []*entity.Client {
 	db := getDatabase()
 	defer db.Close()
 
-	query := "SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, agency_id, " +
-		"unemployed, newcomer, homeless, special_needs FROM client"
-	if len(_sort) >= 2 {
-		query = fmt.Sprintf("SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, "+
-			"agency_id, unemployed, newcomer, homeless, special_needs FROM client ORDER BY %s %s",
-			_sort[0], _sort[1])
-	}
-	rows, err := db.Query(query)
-	checkErr(err)
+	if role == 1 {
+		query := "SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, agency_id, " +
+			"unemployed, newcomer, homeless, special_needs FROM client"
+		if len(_sort) >= 2 {
+			query = fmt.Sprintf("SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, "+
+				"agency_id, unemployed, newcomer, homeless, special_needs FROM client ORDER BY %s %s",
+				_sort[0], _sort[1])
+		}
 
-	clients := []*entity.Client{}
-	for rows.Next() {
-		client := readClient(rows)
-		clients = append(clients, client)
+		rows, err := db.Query(query)
+		checkErr(err)
+
+		clients := []*entity.Client{}
+		for rows.Next() {
+			client := readClient(rows)
+			clients = append(clients, client)
+		}
+		return clients
+	} else {
+		query := "SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, agency_id, " +
+			"unemployed, newcomer, homeless, special_needs FROM client WHERE agency_id = $1"
+		if len(_sort) >= 2 {
+			query = fmt.Sprintf("SELECT id, status, name, dob, childdob, phone, email, city, address1, address2, "+
+				"agency_id, unemployed, newcomer, homeless, special_needs FROM client WHERE agency_id = $1 ORDER BY %s %s",
+				_sort[0], _sort[1])
+		}
+
+		rows, err := db.Query(query, userId)
+		checkErr(err)
+
+		clients := []*entity.Client{}
+		for rows.Next() {
+			client := readClient(rows)
+			clients = append(clients, client)
+		}
+		return clients
 	}
-	return clients
 }
 
 func AddClient(client *entity.Client) *entity.Client {
