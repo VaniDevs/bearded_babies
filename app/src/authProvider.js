@@ -4,24 +4,27 @@ import decodeJwt from 'jwt-decode';
 
 export default (type, params) => {
     if (type === AUTH_LOGIN) {
-        const { username, password } = params;
-        const request = new Request(apiMethod("authenticate"), {
-            method: 'POST',
-            body: JSON.stringify({ username, password }),
-            headers: new Headers({ 'Content-Type': 'application/json' }),
-        });
-        return fetch(request)
-            .then(response => {
-                if (response.status < 200 || response.status >= 300) {
-                    throw new Error(response.statusText);
-                }
-                return response.json();
-            })
-            .then(({ token }) => {
-                const decodedToken = decodeJwt(token);
-                localStorage.setItem('token', token);
-                localStorage.setItem('role', decodedToken.role);
-            });
+        // const { username, password } = params;
+        // const request = new Request(apiMethod("authenticate"), {
+        //     method: 'POST',
+        //     body: JSON.stringify({ username, password }),
+        //     headers: new Headers({ 'Content-Type': 'application/json' }),
+        // });
+        // return fetch(request)
+        //     .then(response => {
+        //         if (response.status < 200 || response.status >= 300) {
+        //             throw new Error(response.statusText);
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(({ token }) => {
+        //         const decodedToken = decodeJwt(token);
+        //         localStorage.setItem('token', token);
+        //         localStorage.setItem('role', decodedToken.role);
+        //     });
+
+        localStorage.setItem('role', 'admin');
+        return Promise.resolve();
     }
 
     if (type === AUTH_LOGOUT) {
@@ -41,25 +44,27 @@ export default (type, params) => {
     }
 
     if (type === AUTH_CHECK) {
-        const token = localStorage.getItem('token');
-        if (token) {
-            const request = new Request(apiMethod("validate"), {
-                method: 'GET',
-                headers: new Headers({'Authorization': `Bearer ${token}`})
-            });
-            return fetch(request)
-                .then(response => {
-                    if (response.status < 200 || response.status >= 300) {
-                        throw new Error(response.statusText);
-                    }
-                    return response.json();
-                })
-                .then(({ token }) => {
-                    localStorage.setItem('token', token);
-                });
-        } else {
-            return Promise.reject();
-        }
+        // const token = localStorage.getItem('token');
+        // if (token) {
+        //     const request = new Request(apiMethod("validate"), {
+        //         method: 'GET',
+        //         headers: new Headers({'Authorization': `Bearer ${token}`})
+        //     });
+        //     return fetch(request)
+        //         .then(response => {
+        //             if (response.status < 200 || response.status >= 300) {
+        //                 throw new Error(response.statusText);
+        //             }
+        //             return response.json();
+        //         })
+        //         .then(({ token }) => {
+        //             localStorage.setItem('token', token);
+        //         });
+        // } else {
+        //     return Promise.reject();
+        // }
+
+        return Promise.resolve();
     }
 
     if (type === AUTH_GET_PERMISSIONS) {

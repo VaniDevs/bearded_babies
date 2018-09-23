@@ -9,7 +9,7 @@ export const GearList = (props) => (
         <Datagrid>
             <TextField source="id" />
             <TextField source="name" />
-            <EditButton basePath="/Gear" />
+            <EditButton basePath="/gears" />
         </Datagrid>
     </List>
 );
