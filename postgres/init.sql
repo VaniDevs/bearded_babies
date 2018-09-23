@@ -9,7 +9,6 @@ CREATE TABLE "public"."agency" (
     "login" character varying NOT NULL,
     "password" character varying NOT NULL,
     "role" integer NOT NULL,
-    "status" integer NOT NULL,
     "name" character varying NOT NULL,
     "phone" character varying NOT NULL,
     "email" character varying NOT NULL,
@@ -20,8 +19,8 @@ CREATE TABLE "public"."agency" (
     CONSTRAINT "agency_id" PRIMARY KEY ("id")
 ) WITH (oids = false);
 
-INSERT INTO "agency" ("id", "login", "password", "role", "status", "name", "phone", "email", "city", "address1", "address2", "contact") VALUES
-(1,	'admin',	'21232f297a57a5a743894a0e4a801fc3',	1,	1,	'',	'',	'',	'',	'',	'',	'');
+INSERT INTO "agency" ("id", "login", "password", "role", "name", "phone", "email", "city", "address1", "address2", "contact") VALUES
+(1,	'admin', '21232f297a57a5a743894a0e4a801fc3',	1,	'BabyGoRound',	'',	'',	'',	'',	'',	'');
 
 DROP TABLE IF EXISTS "client";
 DROP SEQUENCE IF EXISTS client_id_seq;
@@ -31,8 +30,8 @@ CREATE TABLE "public"."client" (
     "id" integer DEFAULT nextval('client_id_seq') NOT NULL,
     "status" integer NOT NULL,
     "name" character varying NOT NULL,
-    "DOB" date NOT NULL,
-    "childDOB" date NOT NULL,
+    "dob" date NOT NULL,
+    "childdob" date NOT NULL,
     "phone" character varying NOT NULL,
     "email" character varying NOT NULL,
     "city" character varying NOT NULL,
